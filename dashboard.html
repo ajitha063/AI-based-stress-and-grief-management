@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Serenity — Dashboard</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-body">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🌿</span>
+      <span class="brand-name">Serenity</span>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link active"><span class="nav-icon">🏠</span>Dashboard</a>
+      <a href="chat.html" class="nav-link"><span class="nav-icon">💬</span>Chat</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">📊</span>Mood Tracker</a>
+      <a href="journal.html" class="nav-link"><span class="nav-icon">📝</span>Journal</a>
+      <a href="suggestions.html" class="nav-link"><span class="nav-icon">🧘</span>Suggestions</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-info" id="sidebarUser"></div>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="page-header">
+      <div>
+        <h1 id="greetingText">Good morning</h1>
+        <p class="header-sub">How are you feeling today?</p>
+      </div>
+      <div class="header-date" id="headerDate"></div>
+    </header>
+
+    <!-- Quick Mood Check-in -->
+    <section class="card mood-checkin">
+      <h3>Today's Check-in</h3>
+      <p>How would you describe your current mood?</p>
+      <div class="mood-options">
+        <button class="mood-btn" data-mood="happy" onclick="quickCheckin('happy')">😊<span>Happy</span></button>
+        <button class="mood-btn" data-mood="calm" onclick="quickCheckin('calm')">😌<span>Calm</span></button>
+        <button class="mood-btn" data-mood="neutral" onclick="quickCheckin('neutral')">😐<span>Neutral</span></button>
+        <button class="mood-btn" data-mood="anxious" onclick="quickCheckin('anxious')">😟<span>Anxious</span></button>
+        <button class="mood-btn" data-mood="sad" onclick="quickCheckin('sad')">😢<span>Sad</span></button>
+        <button class="mood-btn" data-mood="stressed" onclick="quickCheckin('stressed')">😤<span>Stressed</span></button>
+        <button class="mood-btn" data-mood="grieving" onclick="quickCheckin('grieving')">💔<span>Grieving</span></button>
+      </div>
+      <div id="checkinFeedback" class="checkin-feedback hidden"></div>
+    </section>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon">🌱</div>
+        <div class="stat-info">
+          <span class="stat-value" id="streakCount">0</span>
+          <span class="stat-label">Day Streak</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💬</div>
+        <div class="stat-info">
+          <span class="stat-value" id="chatCount">0</span>
+          <span class="stat-label">Conversations</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-info">
+          <span class="stat-value" id="journalCount">0</span>
+          <span class="stat-label">Journal Entries</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">😊</div>
+        <div class="stat-info">
+          <span class="stat-value" id="avgMood">—</span>
+          <span class="stat-label">Avg. Mood (7d)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mood Chart + Quick Actions -->
+    <div class="two-col">
+      <div class="card">
+        <h3>Mood This Week</h3>
+        <canvas id="weeklyMoodChart" height="200"></canvas>
+      </div>
+      <div class="card quick-actions">
+        <h3>Quick Actions</h3>
+        <a href="chat.html" class="action-item">
+          <span class="action-icon">💬</span>
+          <div><strong>Talk to Serenity</strong><p>Share what's on your mind</p></div>
+          <span class="action-arrow">→</span>
+        </a>
+        <a href="suggestions.html?type=breathing" class="action-item">
+          <span class="action-icon">🫁</span>
+          <div><strong>Breathing Exercise</strong><p>4-7-8 relaxation technique</p></div>
+          <span class="action-arrow">→</span>
+        </a>
+        <a href="journal.html" class="action-item">
+          <span class="action-icon">📝</span>
+          <div><strong>Write in Journal</strong><p>Today's reflections</p></div>
+          <span class="action-arrow">→</span>
+        </a>
+        <a href="suggestions.html" class="action-item">
+          <span class="action-icon">🧘</span>
+          <div><strong>Coping Suggestions</strong><p>Personalized for you</p></div>
+          <span class="action-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Emergency Banner -->
+    <div class="emergency-banner" id="emergencyBanner">
+      <span class="emergency-icon">🆘</span>
+      <div>
+        <strong>Need immediate support?</strong>
+        <p>If you're in crisis, please reach out to a professional helpline.</p>
+      </div>
+      <button class="btn-emergency" onclick="showHelplines()">Get Help Now</button>
+    </div>
+  </main>
+
+  <!-- Helpline Modal -->
+  <div class="modal-overlay hidden" id="helplineModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('helplineModal')">✕</button>
+      <h2>🆘 Crisis Support</h2>
+      <p>You are not alone. Please reach out:</p>
+      <div class="helpline-list">
+        <div class="helpline-item"><strong>iCall (India)</strong><span>9152987821</span></div>
+        <div class="helpline-item"><strong>Vandrevala Foundation</strong><span>1860-2662-345</span></div>
+        <div class="helpline-item"><strong>AASRA</strong><span>91-22-27546669</span></div>
+        <div class="helpline-item"><strong>Snehi</strong><span>044-24640050</span></div>
+        <div class="helpline-item"><strong>National Helpline (India)</strong><span>Dial 112</span></div>
+        <div class="helpline-item"><strong>International – Crisis Text Line</strong><span>Text HOME to 741741</span></div>
+      </div>
+      <p class="modal-note">This assistant supports your well-being but does not replace professional care.</p>
+    </div>
+  </div>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Serenity — Chat</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body class="app-body">
+
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🌿</span>
+      <span class="brand-name">Serenity</span>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span>Dashboard</a>
+      <a href="chat.html" class="nav-link active"><span class="nav-icon">💬</span>Chat</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">📊</span>Mood Tracker</a>
+      <a href="journal.html" class="nav-link"><span class="nav-icon">📝</span>Journal</a>
+      <a href="suggestions.html" class="nav-link"><span class="nav-icon">🧘</span>Suggestions</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-info" id="sidebarUser"></div>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <main class="main-content chat-layout">
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-avatar">🌿</div>
+        <div>
+          <h2>Serenity</h2>
+          <span class="online-badge">● Online</span>
+        </div>
+        <button class="btn-clear-chat" onclick="clearChat()">Clear</button>
+      </div>
+
+      <div class="chat-messages" id="chatMessages">
+        <div class="message bot-message">
+          <div class="message-bubble">
+            <p>Hello, I'm Serenity 🌿</p>
+            <p>I'm here to listen and support you. How are you feeling right now? You can share anything — there's no judgment here.</p>
+          </div>
+          <span class="message-time">Just now</span>
+        </div>
+      </div>
+
+      <!-- Emergency detection banner -->
+      <div class="crisis-alert hidden" id="crisisAlert">
+        <span>🆘</span>
+        <span>I'm concerned about you. <a href="#" onclick="showHelplines()">See crisis resources</a></span>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="emotion-indicator" id="emotionIndicator"></div>
+        <div class="input-row">
+          <textarea
+            id="chatInput"
+            placeholder="Share how you're feeling..."
+            rows="1"
+            onkeydown="handleChatKeydown(event)"
+            oninput="autoResize(this)"
+          ></textarea>
+          <button class="btn-send" id="sendBtn" onclick="sendMessage()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <div class="chat-suggestions">
+          <button onclick="quickPrompt('I feel very stressed today')">😤 Stressed</button>
+          <button onclick="quickPrompt('I am feeling sad and lonely')">😢 Sad</button>
+          <button onclick="quickPrompt('I am grieving a loss')">💔 Grieving</button>
+          <button onclick="quickPrompt('I feel anxious and overwhelmed')">😟 Anxious</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Helpline Modal -->
+  <div class="modal-overlay hidden" id="helplineModal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('helplineModal')">✕</button>
+      <h2>🆘 Crisis Support</h2>
+      <p>You are not alone. Please reach out:</p>
+      <div class="helpline-list">
+        <div class="helpline-item"><strong>iCall (India)</strong><span>9152987821</span></div>
+        <div class="helpline-item"><strong>Vandrevala Foundation</strong><span>1860-2662-345</span></div>
+        <div class="helpline-item"><strong>AASRA</strong><span>91-22-27546669</span></div>
+        <div class="helpline-item"><strong>Snehi</strong><span>044-24640050</span></div>
+        <div class="helpline-item"><strong>National Helpline (India)</strong><span>Dial 112</span></div>
+        <div class="helpline-item"><strong>International – Crisis Text Line</strong><span>Text HOME to 741741</span></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/nlp.js"></script>
+  <script src="../js/chat.js"></script>
+</body>
+</html>

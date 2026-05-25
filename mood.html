@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Serenity — Mood Tracker</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="app-body">
+
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🌿</span>
+      <span class="brand-name">Serenity</span>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span>Dashboard</a>
+      <a href="chat.html" class="nav-link"><span class="nav-icon">💬</span>Chat</a>
+      <a href="mood.html" class="nav-link active"><span class="nav-icon">📊</span>Mood Tracker</a>
+      <a href="journal.html" class="nav-link"><span class="nav-icon">📝</span>Journal</a>
+      <a href="suggestions.html" class="nav-link"><span class="nav-icon">🧘</span>Suggestions</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-info" id="sidebarUser"></div>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <header class="page-header">
+      <div>
+        <h1>Mood Tracker</h1>
+        <p class="header-sub">Understanding your emotional patterns</p>
+      </div>
+    </header>
+
+    <!-- Log Today's Mood -->
+    <section class="card">
+      <h3>Log Your Mood</h3>
+      <p>How are you feeling right now?</p>
+      <div class="mood-options">
+        <button class="mood-btn" data-mood="happy" onclick="selectMood('happy')">😊<span>Happy</span></button>
+        <button class="mood-btn" data-mood="calm" onclick="selectMood('calm')">😌<span>Calm</span></button>
+        <button class="mood-btn" data-mood="neutral" onclick="selectMood('neutral')">😐<span>Neutral</span></button>
+        <button class="mood-btn" data-mood="anxious" onclick="selectMood('anxious')">😟<span>Anxious</span></button>
+        <button class="mood-btn" data-mood="sad" onclick="selectMood('sad')">😢<span>Sad</span></button>
+        <button class="mood-btn" data-mood="stressed" onclick="selectMood('stressed')">😤<span>Stressed</span></button>
+        <button class="mood-btn" data-mood="grieving" onclick="selectMood('grieving')">💔<span>Grieving</span></button>
+      </div>
+      <div class="mood-note-area hidden" id="moodNoteArea">
+        <textarea id="moodNote" placeholder="Add a note about how you're feeling (optional)..." rows="3"></textarea>
+        <div class="mood-intensity">
+          <label>Intensity: <span id="intensityVal">5</span>/10</label>
+          <input type="range" id="moodIntensity" min="1" max="10" value="5" oninput="updateIntensity(this.value)"/>
+        </div>
+        <button class="btn-primary" onclick="logMood()">Save Entry</button>
+      </div>
+      <div id="moodSaved" class="success-msg hidden">✓ Mood logged successfully!</div>
+    </section>
+
+    <!-- Charts -->
+    <div class="two-col">
+      <div class="card">
+        <h3>30-Day Mood Journey</h3>
+        <canvas id="moodLineChart" height="220"></canvas>
+      </div>
+      <div class="card">
+        <h3>Mood Distribution</h3>
+        <canvas id="moodPieChart" height="220"></canvas>
+      </div>
+    </div>
+
+    <!-- Mood History Table -->
+    <section class="card">
+      <div class="card-header-row">
+        <h3>Mood History</h3>
+        <button class="btn-secondary" onclick="exportMoodData()">Export CSV</button>
+      </div>
+      <div class="mood-history" id="moodHistory">
+        <p class="empty-state">No mood entries yet. Start logging above!</p>
+      </div>
+    </section>
+
+    <!-- Insights -->
+    <section class="card insights-card">
+      <h3>📈 Your Insights</h3>
+      <div id="moodInsights" class="insights-grid"></div>
+    </section>
+  </main>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/mood.js"></script>
+</body>
+</html>

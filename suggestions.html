@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Serenity — Suggestions</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body class="app-body">
+
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🌿</span>
+      <span class="brand-name">Serenity</span>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span>Dashboard</a>
+      <a href="chat.html" class="nav-link"><span class="nav-icon">💬</span>Chat</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">📊</span>Mood Tracker</a>
+      <a href="journal.html" class="nav-link"><span class="nav-icon">📝</span>Journal</a>
+      <a href="suggestions.html" class="nav-link active"><span class="nav-icon">🧘</span>Suggestions</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-info" id="sidebarUser"></div>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <header class="page-header">
+      <div>
+        <h1>Coping Suggestions</h1>
+        <p class="header-sub">Personalized tools for your well-being</p>
+      </div>
+    </header>
+
+    <!-- Category Tabs -->
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="showTab('breathing')">🫁 Breathing</button>
+      <button class="tab-btn" onclick="showTab('grounding')">🌱 Grounding</button>
+      <button class="tab-btn" onclick="showTab('music')">🎵 Music</button>
+      <button class="tab-btn" onclick="showTab('activities')">🎯 Activities</button>
+      <button class="tab-btn" onclick="showTab('affirmations')">💫 Affirmations</button>
+    </div>
+
+    <!-- Breathing Tab -->
+    <div class="tab-content active" id="tab-breathing">
+      <div class="suggestions-grid">
+
+        <div class="card suggestion-card featured">
+          <div class="suggestion-tag">Most Popular</div>
+          <h3>4-7-8 Breathing</h3>
+          <p>Inhale 4s → Hold 7s → Exhale 8s. Activates the parasympathetic nervous system.</p>
+          <button class="btn-primary" onclick="startBreathing('478')">Start Exercise</button>
+        </div>
+
+        <div class="card suggestion-card">
+          <h3>Box Breathing</h3>
+          <p>Inhale 4s → Hold 4s → Exhale 4s → Hold 4s. Used by Navy SEALs for stress.</p>
+          <button class="btn-primary" onclick="startBreathing('box')">Start Exercise</button>
+        </div>
+
+        <div class="card suggestion-card">
+          <h3>Deep Belly Breathing</h3>
+          <p>Slow abdominal breathing to calm anxiety quickly.</p>
+          <button class="btn-primary" onclick="startBreathing('belly')">Start Exercise</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Grounding Tab -->
+    <div class="tab-content" id="tab-grounding">
+      <div class="suggestions-grid">
+        <div class="card suggestion-card featured">
+          <div class="suggestion-tag">5-4-3-2-1 Technique</div>
+          <h3>Sensory Grounding</h3>
+          <p>Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste.</p>
+          <button class="btn-primary" onclick="startGrounding()">Begin</button>
+        </div>
+        <div class="card suggestion-card">
+          <h3>Cold Water Reset</h3>
+          <p>Splash cold water on your face or wrists. The mammalian dive reflex quickly calms the nervous system.</p>
+        </div>
+        <div class="card suggestion-card">
+          <h3>Mindful Body Scan</h3>
+          <p>Slowly bring attention from toes to head, noticing sensations without judgment.</p>
+          <button class="btn-primary" onclick="startBodyScan()">Begin Scan</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Music Tab -->
+    <div class="tab-content" id="tab-music">
+      <div class="card">
+        <h3>🎵 Mood-Based Music Suggestions</h3>
+        <p>Select your current mood for a curated playlist recommendation:</p>
+        <div class="music-mood-selector">
+          <button class="mood-music-btn" onclick="showMusicFor('stressed')">😤 Stressed</button>
+          <button class="mood-music-btn" onclick="showMusicFor('sad')">😢 Sad</button>
+          <button class="mood-music-btn" onclick="showMusicFor('anxious')">😟 Anxious</button>
+          <button class="mood-music-btn" onclick="showMusicFor('grieving')">💔 Grieving</button>
+          <button class="mood-music-btn" onclick="showMusicFor('calm')">😌 Calm</button>
+        </div>
+        <div id="musicSuggestions" class="music-suggestions"></div>
+      </div>
+    </div>
+
+    <!-- Activities Tab -->
+    <div class="tab-content" id="tab-activities">
+      <div class="suggestions-grid">
+        <div class="card suggestion-card">
+          <div class="activity-icon">🚶</div>
+          <h3>Nature Walk</h3>
+          <p>Even 15 minutes in nature significantly reduces cortisol levels. Leave your phone behind if possible.</p>
+        </div>
+        <div class="card suggestion-card">
+          <div class="activity-icon">🎨</div>
+          <h3>Creative Expression</h3>
+          <p>Draw, paint, or doodle without judgment. Art therapy helps process difficult emotions.</p>
+        </div>
+        <div class="card suggestion-card">
+          <div class="activity-icon">📞</div>
+          <h3>Connect with Someone</h3>
+          <p>Call or text a trusted friend or family member. Social connection is the #1 predictor of well-being.</p>
+        </div>
+        <div class="card suggestion-card">
+          <div class="activity-icon">🧹</div>
+          <h3>Declutter a Small Space</h3>
+          <p>Cleaning a small area gives a sense of accomplishment and control when things feel chaotic.</p>
+        </div>
+        <div class="card suggestion-card">
+          <div class="activity-icon">📚</div>
+          <h3>Read Fiction</h3>
+          <p>Getting lost in a story gives your mind a break from rumination.</p>
+        </div>
+        <div class="card suggestion-card">
+          <div class="activity-icon">🍵</div>
+          <h3>Mindful Tea/Coffee</h3>
+          <p>Prepare and drink slowly, engaging all your senses. A simple mindfulness ritual.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Affirmations Tab -->
+    <div class="tab-content" id="tab-affirmations">
+      <div class="card affirmation-card">
+        <p class="affirmation-label">Today's Affirmation</p>
+        <blockquote id="affirmationText" class="affirmation-text"></blockquote>
+        <button class="btn-primary" onclick="newAffirmation()">New Affirmation</button>
+      </div>
+      <div class="suggestions-grid" id="affirmationCategories"></div>
+    </div>
+
+    <!-- Breathing Exercise Modal -->
+    <div class="modal-overlay hidden" id="breathingModal">
+      <div class="modal modal-breathing">
+        <button class="modal-close" onclick="stopBreathing()">✕</button>
+        <h2 id="breathingTitle">Breathing Exercise</h2>
+        <div class="breathing-circle-wrap">
+          <div class="breathing-circle" id="breathingCircle">
+            <span id="breathingLabel">Ready</span>
+          </div>
+        </div>
+        <p id="breathingInstruction" class="breathing-instruction">Press Start to begin</p>
+        <div class="breathing-controls">
+          <button class="btn-primary" id="breathingStartBtn" onclick="toggleBreathing()">Start</button>
+          <span id="cycleCount" class="cycle-count"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grounding Modal -->
+    <div class="modal-overlay hidden" id="groundingModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal('groundingModal')">✕</button>
+        <h2>5-4-3-2-1 Grounding</h2>
+        <div id="groundingContent"></div>
+        <button class="btn-primary" id="groundingNextBtn" onclick="nextGroundingStep()">Next</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/suggestions.js"></script>
+</body>
+</html>

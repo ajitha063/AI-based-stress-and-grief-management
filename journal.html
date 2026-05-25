@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Serenity — Journal</title>
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body class="app-body">
+
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon">🌿</span>
+      <span class="brand-name">Serenity</span>
+    </div>
+    <div class="nav-links">
+      <a href="dashboard.html" class="nav-link"><span class="nav-icon">🏠</span>Dashboard</a>
+      <a href="chat.html" class="nav-link"><span class="nav-icon">💬</span>Chat</a>
+      <a href="mood.html" class="nav-link"><span class="nav-icon">📊</span>Mood Tracker</a>
+      <a href="journal.html" class="nav-link active"><span class="nav-icon">📝</span>Journal</a>
+      <a href="suggestions.html" class="nav-link"><span class="nav-icon">🧘</span>Suggestions</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-info" id="sidebarUser"></div>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <header class="page-header">
+      <div>
+        <h1>My Journal</h1>
+        <p class="header-sub">A private space for your thoughts</p>
+      </div>
+    </header>
+
+    <div class="journal-layout">
+      <!-- Write Entry -->
+      <div class="journal-write">
+        <div class="card journal-card">
+          <div class="journal-header">
+            <div>
+              <input type="text" id="journalTitle" placeholder="Title your entry..." class="journal-title-input"/>
+              <p class="journal-date" id="journalDateDisplay"></p>
+            </div>
+            <div class="journal-mood-tag">
+              <select id="journalMoodTag">
+                <option value="">Mood tag...</option>
+                <option value="happy">😊 Happy</option>
+                <option value="calm">😌 Calm</option>
+                <option value="neutral">😐 Neutral</option>
+                <option value="anxious">😟 Anxious</option>
+                <option value="sad">😢 Sad</option>
+                <option value="stressed">😤 Stressed</option>
+                <option value="grieving">💔 Grieving</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Prompts -->
+          <div class="prompt-strip" id="promptStrip">
+            <span class="prompt-label">✨ Prompt:</span>
+            <span id="promptText" class="prompt-text"></span>
+            <button onclick="newPrompt()" class="btn-text">New prompt</button>
+          </div>
+
+          <textarea
+            id="journalContent"
+            placeholder="Write your thoughts freely..."
+            rows="14"
+            oninput="updateWordCount()"
+          ></textarea>
+          <div class="journal-footer">
+            <span class="word-count" id="wordCount">0 words</span>
+            <div class="journal-actions">
+              <button class="btn-secondary" onclick="clearEntry()">Clear</button>
+              <button class="btn-primary" onclick="saveEntry()">Save Entry</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Entry List -->
+      <div class="journal-list">
+        <div class="card">
+          <div class="card-header-row">
+            <h3>Past Entries</h3>
+            <input type="search" id="journalSearch" placeholder="Search..." oninput="searchEntries(this.value)"/>
+          </div>
+          <div id="entryList">
+            <p class="empty-state">No entries yet. Start writing!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Entry View Modal -->
+  <div class="modal-overlay hidden" id="entryModal">
+    <div class="modal modal-large">
+      <button class="modal-close" onclick="closeModal('entryModal')">✕</button>
+      <p class="modal-entry-date" id="modalDate"></p>
+      <h2 id="modalTitle"></h2>
+      <div class="modal-mood-tag" id="modalMood"></div>
+      <div class="modal-entry-text" id="modalText"></div>
+      <div class="modal-actions">
+        <button class="btn-danger" onclick="deleteCurrentEntry()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/journal.js"></script>
+</body>
+</html>
